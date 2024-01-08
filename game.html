@@ -16,8 +16,8 @@
   <img src="gifs/finalMeet4.1.gif" id="gif4">
   <img src="gifs/finalMeet4.2.gif" id="gif5">
 </div>
-<audio id="music" src="meet1.mp3"></audio>
-<audio id="finalMeetMusic" src="finalMeet.mp3"></audio>
+<audio id="music" src="meet1.mp3" autoplay loop></audio>
+<audio id="finalMeetMusic" src="finalMeet.mp3" autoplay loop></audio>
 
 
 <!-- 导航栏 -->
@@ -115,7 +115,7 @@
 
   //游戏进度参数
   let finalMeet=false;
-  let playMusic=true;
+  let playMusic=false;
   let officeCrisis=0;
   let ETLine=false;
   let endType=0;
@@ -123,7 +123,7 @@
   
 
   gameContainer.addEventListener("mousedown", createOrEraseBall);
-
+   playMusic=true;
   function createOrEraseBall(event) {
     const mouseX = event.clientX - gameContainer.offsetLeft;
     const mouseY = event.clientY - gameContainer.offsetTop;
