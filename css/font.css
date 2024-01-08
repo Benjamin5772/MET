@@ -1,0 +1,28 @@
+@font-face {
+	font-family: 'Baloo';
+	src: url('fonts/Baloo-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'SmileySans';
+	src: url('fonts/SmileySans-Oblique.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'GT-America-md';
+	src: url('fonts/GT-America-Mono-Medium-Trial.otf') format('opentype');
+}
+@font-face {
+	font-family: 'ABC-Whyte-Mid';
+	src: url('fonts/ABCWhyte-Medium-Trial.otf') format('opentype');
+}
+@font-face {
+	font-family: 'ABCWhyte-Bold';
+	src: url('fonts/ABCWhyte-Black-Bold.otf') format('opentype');
+}
+
+@font-face {
+	font-family: 'ABCWhyte-Black';
+	src: url('fonts/ABCWhyte-Black-Trial.otf') format('opentype');
+}
+

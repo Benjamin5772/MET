@@ -1,0 +1,242 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>met</title>
+  <link href="css/indexMenu.css" rel="stylesheet">
+  <link href="css/font.css" rel="stylesheet">
+  <link href="css/index.css" rel="stylesheet">
+</head>
+<body>
+<!-- end-pop (finalMeet)-->
+<div class="end-pop">
+  <!-- <img src="gifs/finalMeet1.gif" id="end-pop-gif"> -->
+  <img src="gifs/finalMeet1.gif" id="gif1">
+  <img src="gifs/finalMeet2.gif" id="gif2">
+  <img src="gifs/finalMeet3.gif" id="gif3">
+  <img src="gifs/finalMeet4.1.gif" id="gif4">
+  <img src="gifs/finalMeet4.2.gif" id="gif5">
+</div>
+<audio id="music" src="meet1.mp3" preload="auto" autoplay loop></audio>
+<audio id="finalMeetMusic" src="finalMeet.mp3" preload="auto" autoplay></audio>
+
+
+<!-- 导航栏 -->
+
+<div id="menu">
+    <a href="#guidance" class="menu-button">GUIDANCE</a>
+    <div class="lang-container">
+        <a href="index.html" class="menu-button lang-btn">ENG</a>
+        <a href="index_Chinese.html" class="menu-button lang-btn">/中</a>
+    </div>
+    <img src="images/sound-off.png" id="playButton" height="40px">
+    <a href="index.html" class="img-button">
+    <img src="images/yujian_black.png" width="100px">
+    </a>
+    </div>
+</div>
+
+<div id="guidance-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn"><img src="images/cross.png" width="50px" ></span>
+        <img src="gifs/Guidance.gif" width="100%">
+    </div>
+</div>
+
+<!-- 岁月轮 -->
+<svg id="border-path-container" width="100%" height="100%">
+<path id="border-path" d=""stroke-linecap="round"/>
+</svg>
+<div id="game-container-outer"></div>
+<!-- 主要交互区域 -->
+<div id="game-container"></div>
+
+<!-- 年龄框（不显示） -->
+<div id="age-container"></div>
+<!-- 记忆球框（不显示） -->
+<div id="alive-count">Alive Count: 0</div>
+<!-- 点击次数框（不显示） -->
+<div id="click-count"></div>
+<!-- 提示框（一般情况下不显示） -->
+<div id="alert-text"></div>
+
+<!-- 故事框 -->
+<div id="story-container">
+<div id="nameList"></div>
+<div id="divideLine">
+  <span class="label-top">Name List ⬆</span>
+  <hr class="divider-line">
+  <span class="label-bottom">Story Line ⬇ </span>
+</div>
+<div id="story"></div>
+</div>
+
+<!-- 名字列表 -->
+<!-- <div id="nameList-container">
+  <div id="nameList"></div>
+  </div> -->
+
+<!-- 橡皮框 -->
+<div id="eraser-container">
+<img id="eraser-image" src="images/eraser1.png" alt="Eraser 1">
+</div>
+
+<!-- 结局 -->
+<div id="end-container"></div>
+
+<!-------- 以下是js code -------->
+
+<!-- 游戏主页 -->
+<script>
+  const gameContainer = document.getElementById("game-container");
+  const aliveCountElement = document.getElementById("alive-count");
+  const clickCountElement = document.getElementById("click-count");
+  const ageContainer = document.getElementById("age-container");
+
+  const balls = new Map(); // Map数组
+  let nextBallId = 0; // 用于给球编号
+  let eraserActive = false;//橡皮激活
+  let clickCount = 0;//点击次数
+  let lastClick= 0;//储存故事上一步选择
+  let ballGrowing = false;  // 小球是否增长
+  let birthday=Math.round((Math.random()*50+1950));//出生年（1950-2000）
+  let ageFix=5;//年龄修正
+  let age = ageFix;//岁月
+  let maxAge=Math.round(Math.random() * 15 +80);//升天年纪（80-95）
+  let choiceMadeForCreate=true;
+  let deal=0;//设定性别偏好为未知，第一次爱情相遇后决定0（喜女）还是1（喜男）
+  let ageAbaleGrow=false;//控制第一个球不消耗岁月
+  let inLove=false;
+
+  //故事参数
+  let storyLine=0;
+  let journalistLine=0;
+  let soldierLine=0;
+  
+
+  //游戏进度参数
+  let finalMeet=false;
+  let playMusic=true;
+  let officeCrisis=0;
+  let ETLine=false;
+  let endType=0;
+
+  
+
+  gameContainer.addEventListener("mousedown", createOrEraseBall);
+
+  function createOrEraseBall(event) {
+    const mouseX = event.clientX - gameContainer.offsetLeft;
+    const mouseY = event.clientY - gameContainer.offsetTop;
+
+    //开始paly后自动播放音乐
+    if(playMusic){
+    document.getElementById("music").play();
+    playButton.src = "images/sound-play.png"; // 播放时的图标
+    }
+
+
+    //鼠标为橡皮时擦除球
+    if (eraserActive) {
+      eraseBall(mouseX, mouseY);
+      return;
+    }
+    //鼠标为默认时候生成球
+    else
+    {
+        
+        if (!canCreateNewBall()) {
+          showAlertText("You must clean your inner space to meet more people.");
+           return;
+          }
+        else if(!choiceMadeForCreate){
+          showAlertText("There is someone looking forward your decision.");
+           return;
+        }
+        else
+           {
+            ballGrowing = true;
+            createBall(mouseX, mouseY);
+           }
+    }
+    
+  }
+
+  //鼠标松开停止增长
+  gameContainer.addEventListener("mouseup", () => {
+    if (ballGrowing) {
+        ballGrowing = false; // 停止球的增长
+    }
+  });
+
+ 
+</script>
+
+<script>
+//播放/暂停bgm功能
+document.querySelector("#playButton").addEventListener("click", function() {
+    const music = document.getElementById("music");
+    const playButton = document.getElementById("playButton");
+    
+    if (!playMusic) {
+
+        if(!finalMeet)
+        music.play();
+        else finalMeetMusic.play();
+
+        playButton.src = "images/sound-play.png"; // 播放时的图标
+        playMusic=true;
+    } else {
+        music.pause();
+        finalMeetMusic.pause();
+        playButton.src = "images/sound-off.png"; // 暂停时的图标
+        playMusic=false;
+    }
+});
+
+</script>
+
+<script src="scripts/F_eraseBall.js"></script>
+<script src="scripts/F_createBall.js" ></script>
+<script src="scripts/F_animateBall.js"></script>
+<script src="scripts/F_count.js"></script>
+<script src="scripts/F_createdStory.js"></script>
+<script src="scripts/F_createdNameList.js"></script>
+<script src="scripts/F_choosableStory&leave.js"></script>
+<script src="scripts/F_showGif.js"></script>
+<script src="scripts/ifCanCreate.js"></script>
+<script src="scripts/F_quickStory.js"></script>
+
+<script src="scripts/storyLine/F_waiterLine.js"></script>
+<script src="scripts/storyLine/F_waiterLineStory.js"></script>
+<script src="scripts/storyLine/F_journalistLine.js"></script>
+<script src="scripts/storyLine/F_journalistLineStory.js"></script>
+<script src="scripts/storyLine/F_soldierLine.js"></script>
+<script src="scripts/storyLine/F_soldierLineStory.js"></script>
+
+<script src="scripts/F_finalMeet.js"></script>
+
+
+
+
+<!-- 鼠标 -->
+<script src="scripts/mouseChange.js"> </script>
+
+<!-- 生命进度 -->
+<script src="scripts/lifeBar.js"></script>
+
+<!-- choose文字的出现和处理 -->
+<script src="scripts/F_addEventToStory&leave.js"></script>
+<script src="scripts/F_handleChoice.js"></script>
+
+<!-- 游戏状态更新函数 -->
+<script src="scripts/F_changeBallLook.js"></script>
+
+<!-- 游戏结束 -->
+<script src="scripts/gameFinish.js"></script> 
+<script>
+  requestAnimationFrame(() => ifgameEnd());
+</script>
+<!-- 指导窗口脚本 -->
+<script src="scripts/popWindow.js"></script>
+</body>
+</html>

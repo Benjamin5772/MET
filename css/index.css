@@ -1,0 +1,461 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    cursor: default;
+  }
+
+/* 年龄（不显示） */
+  #age-container {
+    position: absolute;
+    right: 0;
+    width: 33.33%;
+    height: 100%;
+    transform: translateY(-30%); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color: #333;
+    visibility: hidden;
+  }
+  /*  活球计数（不显示） */
+  #alive-count{
+    position: absolute;
+    
+    visibility: hidden;
+  }
+  /*  球球计数（不显示） */
+  #click-count{
+    position: absolute;
+    transform: translateY(100%);
+    visibility: hidden;
+  }
+
+/* 主游戏交互界面 */
+#game-container-outer {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border: 5px solid black;
+  border-radius: 50%;
+  /* border:1px solid blue; */
+}
+
+  #game-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border: 5px solid black;
+    border-radius: 50%;
+    /* border:1px solid blue; */
+    user-select: none; /*  用户不可选元素*/
+  }
+
+  #border-path-container {
+    position: absolute;
+    z-index: 0;
+    transform: scaleX(-1) rotate(270deg);
+    width: 600px;
+    height:600px;
+    display: flex;              /* 使用Flexbox来居中子元素 */
+    justify-content: center;    /* 水平居中子元素 */
+    align-items: center;        /* 垂直居中子元素 */
+    /* border: 1px solid blue; */
+}
+  
+#border-path {
+    fill: none;
+    stroke: black;
+    stroke-width: 10;
+    transition: stroke-dashoffset 0.5s ease-out;
+    visibility: hidden;
+    /* border:10px solid red; */
+}
+
+/* 球球动画 */
+  .ball {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    font-size: 4px; 
+    line-height: 20px; /* 垂直居中，与球的高度相同 */
+    color: white; 
+    text-align: center; 
+    user-select: none; /*  用户不可选文字*/
+    font-family: 'Baloo';
+    animation: bounceAnimation 0.2s ease-in ;
+    transform-origin: center center;
+  }
+ /* 初球出现动画 */
+  @keyframes bounceAnimation {
+    0% {
+        transform: scale(0.2); 
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1); 
+        opacity: 1;
+      }
+}
+
+/* 球消失动画 */
+@keyframes disappearAnimation {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* ———————————————————————————————————————————————————————————————————————————————————— */
+/* 名字框 */
+#nameList-container {
+  position: absolute;
+  right: 0;
+  width: 30%;
+  height: 100%;
+  transform: translateY(-30%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  /* border:1px solid red; */
+}
+/*人名及对应关系*/
+#nameList{
+  width: 350px;/*宽*/
+  max-height: 150px; /*高 */
+  overflow-y: auto; /* 当内容超出容器时显示滚动条 */
+  font-size: 16px;
+   /* border-bottom:2px solid black;  */
+}
+/*人名和故事分割线*/
+#divideLine {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.label-top, .label-bottom {
+  font-family: 'Baloo';
+  font-size: 15px; 
+  margin: 0; 
+}
+.divider-line {
+  width:  350px;  
+  border: none;
+  border-top: 2px solid black; 
+  margin: 0;   
+}
+
+/* ———————————————————————————————————————————————————————————————————————————————————— */
+/* 橡皮交互界面 */
+#eraser-container {
+  position: absolute;
+  left: 0;
+  bottom: 0; /* Position it at the bottom of its parent */
+  width: 33.33%;
+  height: 100%; /* Take up half the height of its parent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    /* border:1px solid green; */
+  }
+
+  #eraser-image {
+    width: 80px;
+  }
+
+/* ———————————————————————————————————————————————————————————————————————————————————— */
+/* 文字动画 */
+#story-container {
+  position: absolute;
+  right: 0;
+  /* width: 33.33%; */
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  /* border:1px solid red; */
+}
+/*叙事框*/
+#story {
+  width: 350px;/*宽*/
+  max-height: 400px; /*高 */
+  overflow-y: auto; /* 当内容超出容器时显示滚动条 */
+  font-size: 16px;
+  /* border:1px solid black; */
+}
+.story-entry {
+  opacity: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  transform: translateX(20%);
+  animation: slideFromLeft 1s forwards;
+  /* font-family:'GT-America-md'; */
+  font-family: 'Baloo';
+  will-change: transform, opacity;  /* 这会提示浏览器提前做优化，让动画更加流畅 */
+  /* border:1px solid red; */
+  }
+
+/* 文字插入动画 */
+@keyframes slideFromLeft {
+0% {
+    transform: translateX(20%);
+    opacity: 0;
+}
+100% {
+    transform: translateX(0);
+    opacity: 1;
+}
+}
+
+/* 文字颜色动画（非抉择故事） */
+@keyframes textColorChange {
+from {
+    color: inherit;  
+}
+to {
+    /* 这里不指定颜色在 JavaScript 中动态设置颜色 */
+}
+}
+
+.animated-text-color {
+animation: textColorChange 0.8s ease-out forwards;
+}
+
+  /* 定义垂直滚动条的宽度 */
+::-webkit-scrollbar {
+  width: 6px; 
+}
+
+/* 定义滚动条的轨道（背景） */
+::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 10px; 
+}
+
+/* 定义滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  background: silver;
+  border-radius: 10px; 
+  /* border:1px solid black; */
+}
+
+/* 定义水平滚动条的高度 */
+::-webkit-scrollbar {
+  height: 0px;
+}
+
+/* ———————————————————————————————————————————————————————————————————————————————————— */
+/* 抉择故事 */
+.event {
+  opacity: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  transform: translateX(20%);
+  animation: slideFromLeft 1s forwards;
+  will-change: transform, opacity; 
+  /* border: 1px solid blue; */
+  text-align: left; 
+  font-family: 'Baloo';
+  
+}
+.event p {
+  margin: 0;
+  padding: 0;
+}
+/* 按钮样式 */
+.button-style {
+  font-size: 15px;
+  width: 150px; 
+  height: 30px; 
+  margin-top: 10px;
+  margin-bottom: 20px;
+  background-color: white;
+  color: black; 
+  border: 3px solid black; 
+  cursor: pointer;
+  border-radius: 20px; 
+  display: inline-block;
+  transition: all 0.2s ease-out; 
+  z-index: 1001;
+}
+
+.button-style:hover {
+  background-color: black; 
+  color: white;
+}
+
+/*计时器样式 */
+.gif-style {
+  width: 400px;
+  /* border: 1px solid blue; */
+}
+/*提示文字样式*/
+.choice-text {
+  padding: 0;
+  margin: 0;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+/* ———————————————————————————————————————————————————————————————————————————————————— */
+/* gif消失动画 */
+@keyframes fadeOut {
+  to {
+      opacity: 0;
+  }
+}
+.fade-out {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* ———————————————————————————————————————————————————————————————————————————————————— */
+/* 提示窗口 */
+#alert-text {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  opacity: 0.8;
+  transition: opacity 0.5s ease-in-out; /* 添加 transition 属性 */
+  font-family: 'ABC-Whyte-Mid';
+  z-index: 1000;
+}
+
+/* ———————————————————————————————————————————————————————————————————————————————————— */
+/* 添加结束动画和按钮 */
+.fade-rectangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 1000;
+  opacity: 0;
+}
+
+#end-container {
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  /* border: 1px solid black; */
+}
+
+.end-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* height: 100%; */
+  width: 100%;
+  z-index: 10001;
+   /* border: 1px solid black; */
+}
+
+.end-story-container {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  /* border:1px solid red; */
+}
+
+.end-story {
+  width: 350px;
+  max-height: 400px; 
+  overflow-y: auto;
+  font-size: 20px;
+  z-index: 1001;
+  transform: translateY(0%); 
+  /* border:1px solid black; */
+}
+
+
+.button-container {
+  position: relative; 
+  top: 5%;           
+  width: 350px;
+  display: flex;
+  z-index: 10001;
+  justify-content: space-between;
+  transform: translateY(-20%); 
+  /* border:1px solid black; */
+}
+/* 结束按钮样式 */
+.button-style-end {
+  font-size: 20px;
+  width: 160px; 
+  height: 40px; 
+  margin-top: 10px;
+  margin-bottom: 20px;
+  background-color:  black;
+  color:  white; 
+  border: 4px solid black; 
+  cursor: pointer;
+  border-radius: 20px; 
+  display: inline-block;
+  transition: all 0.2s ease-out; 
+  z-index: 1001;
+}
+
+.button-style-end:hover {
+  background-color: white; 
+  color: black;
+}
+/* 最终游戏开启 -------------------------------------------------*/
+#gif1, #gif2, #gif3, #gif4, #gif5 {
+  position: absolute;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  z-index: -9;
+}
+
+
+
+
+
+

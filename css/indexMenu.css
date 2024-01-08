@@ -1,0 +1,174 @@
+/* Style for the menu buttons */
+#menu {
+    width: 100vw;
+    position: absolute;
+    top: 0; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;    
+    z-index: 9999;
+    font-family: 'ABC-Whyte-Mid';
+    /* border:1px solid green; */
+    padding: 0;
+    margin: 0;
+}
+
+
+
+.menu-button {
+    background-color: transparent;
+    font-size: 25px;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s ease-in;
+    margin-right: 20px;  
+    margin-left: 30px; 
+    text-decoration: none;  /* Removes underline */
+}
+
+.menu-button:hover {
+    text-decoration: underline;
+}
+
+.lang-container {
+    display: flex;
+    justify-content: center;
+}
+
+.lang-btn {
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.img-button {
+    margin-right: 20px;
+    margin-left: auto;  /* 这将推送img-button到容器的右边 */
+}
+/* 指导窗口 */
+.modal {
+    display: none; /* 默认情况下隐藏模态窗口 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 半透明背景 */
+    z-index: 9999;
+}
+
+.modal-content {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation-duration: 0.4s; 
+
+    
+}
+
+.show-modal {
+    animation-name: zoomIn;
+    animation-duration: 0.3s; 
+
+}
+
+.hide-modal {
+    animation-name: zoomOut;
+    animation-duration: 0.3s; 
+}
+
+
+.close-btn {
+    position: absolute;
+    padding: 0;
+    left: auto;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    /* border:1px solid green; */
+}
+
+.close-btn img:hover {
+    content: url('cross-hover.png');
+}
+
+/* 窗口动画 */
+@keyframes zoomIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.fade-in {
+    animation-name: fadeIn;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    
+}
+
+.fade-out {
+    animation-name: fadeOut;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* video */
+.end-pop {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+  }
+
+#playButton {
+    margin-left: 10px;
+    cursor: pointer;  
+    border-radius: 10px;
+    transition: border 0.3s ease;
+}
+
+#playButton:hover {
+    border: solid 3px #000;  /* 悬停时边框变颜色 */
+}
+
+
