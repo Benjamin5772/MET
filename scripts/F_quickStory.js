@@ -224,7 +224,7 @@ function getRandomLove(content,index) {
 const troubleNames = [
     "Sami", 
     "Firas", 
-    "Doctor", 
+    "Homeless", 
     "Adil",
     "Woman", 
     "Takeuchi", 
@@ -235,10 +235,10 @@ const troubleNames = [
 ];
 const troubleNameList = [
     "tree hugger", 
-    "ruin-keeper", 
-    "MSF", 
+    "river keeper", 
+    "quiet sleeper", 
     "plain watcher", 
-    "wall fighter", 
+    "fire breaker", 
     "fisherman",
     "bread beggar",
     "alcoholic",
@@ -246,9 +246,9 @@ const troubleNameList = [
 ];
 const troubleRelations = [ 
     "a boy", 
-    "a teen", 
-    "a crying",
-    "an angry",
+    "a father", 
+    "a quiet",
+    "a helpless",
     "",
     "a fisherman",
     "a pair of frail",
@@ -258,14 +258,14 @@ const troubleRelations = [
 
 const troubleStories = [
     "hugging a tree, his family has just disappeared, he wishes the tree could protect him.", 
-    "by the ruins, he hides under a makeshift shed built from broken tiles, where his toys and friends are.", 
-    "kneels before trucks because they carries the hope for his patients.", 
+    "carrying a sun-shaped lantern, he goes to the river every windless night to mourn his daughter.", 
+    "on the flickering Christmas night streets, he curls up in the corner.", 
     "under the eaves,she sits here every day, gazing at the plateau and barren fields, just as they gaze back at her.",
-    "throws whatever she can find at a thick wall - stones, clumps , bucket...", 
+    "in the blazing forest fire, she calls out for her child", 
     ", he said the ocean nurtured him, and it will also rest him.", 
     ", begging for a piece of bread for his starving younger sister.",
     "with disabled legs, sits on the ground, despondently drinking alcohol, with an empty container in front.",
-    ", said his entire life will be trapped in this urban jungle, wasting away.",
+", said his entire life will be trapped in this urban jungle, wasting away.",
 ];
 function getRandomTroubleIndex() {
     const index = Math.floor(Math.random() * troubleNames.length);
